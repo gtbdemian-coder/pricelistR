@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>가격표 조회</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>가격표 조회</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>제품명</th>
+                <th>혼용률</th>
+                <th>가공도</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.composition}"></td>
+                <td th:text="${product.finish}"></td>
+                <td th:text="${product.price}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
