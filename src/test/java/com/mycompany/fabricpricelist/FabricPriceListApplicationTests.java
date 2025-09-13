@@ -1,4 +1,4 @@
-package com.mycompany.fabric_price_list;
+package com.mycompany.fabricpricelist;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

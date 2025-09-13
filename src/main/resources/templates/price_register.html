@@ -49,11 +49,24 @@
             border: 1px solid #ccc;
             background: #f7f7f7;
             color: #222;
-            text-decoration: none; /* 링크 밑줄 제거 */
+            text-decoration: none;
             border-radius: 6px;
-            font: inherit; /* 글꼴 통일 */
+            font: inherit;
             line-height: 1.2;
             cursor: pointer;
+        }
+
+        /* 에러 스타일 */
+        .field-error {
+            border-color: #c00;
+            background: #fff6f6;
+        }
+
+        .error-msg {
+            color: #c00;
+            font-weight: 500;
+            margin-top: 4px;
+            font-size: 0.92rem;
         }
     </style>
 </head>
@@ -61,31 +74,42 @@
 <div class="wrap">
     <h1>가격 등록</h1>
 
-    <!-- 간단 메시지 표기(선택) -->
+    <!-- 글로벌 메시지 -->
     <div th:if="${error}" style="color:#c00" th:text="${error}"></div>
     <div th:if="${message}" style="color:#060" th:text="${message}"></div>
 
-    <!-- 폼: /prices/register 로 POST -->
+    <!-- 글로벌 바인딩/검증 에러 -->
+    <div th:if="${#fields.hasGlobalErrors()}" class="error-msg"
+         th:each="e : ${#fields.globalErrors()}" th:text="${e}"></div>
+
     <form th:action="@{/prices/register}" th:object="${form}" method="post">
         <label>제품명
-            <input type="text" th:field="*{name}" placeholder="예) Nylon 100" required/>
+            <input type="text" th:field="*{name}" placeholder="예) Nylon 100" required
+                   th:classappend="${#fields.hasErrors('name')} ? ' field-error' : ''"/>
+            <div class="error-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         </label>
 
         <div class="row">
             <div>
                 <label>혼용/구성
-                    <input type="text" th:field="*{composition}" placeholder="예) 100% Nylon"/>
+                    <input type="text" th:field="*{composition}" placeholder="예) 100% Nylon"
+                           th:classappend="${#fields.hasErrors('composition')} ? ' field-error' : ''"/>
+                    <div class="error-msg" th:if="${#fields.hasErrors('composition')}" th:errors="*{composition}"></div>
                 </label>
             </div>
             <div>
                 <label>가공/마감
-                    <input type="text" th:field="*{finish}" placeholder="예) PU Coating"/>
+                    <input type="text" th:field="*{finish}" placeholder="예) PU Coating"
+                           th:classappend="${#fields.hasErrors('finish')} ? ' field-error' : ''"/>
+                    <div class="error-msg" th:if="${#fields.hasErrors('finish')}" th:errors="*{finish}"></div>
                 </label>
             </div>
         </div>
 
         <label>가격
-            <input type="number" step="0.01" min="0" th:field="*{price}" placeholder="예) 12.50" required/>
+            <input type="number" step="0.01" min="0" th:field="*{price}" placeholder="예) 12.50" required
+                   th:classappend="${#fields.hasErrors('price')} ? ' field-error' : ''"/>
+            <div class="error-msg" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
         </label>
 
         <div class="actions">

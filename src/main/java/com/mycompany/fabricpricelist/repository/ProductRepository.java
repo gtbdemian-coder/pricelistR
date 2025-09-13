@@ -1,5 +1,6 @@
-package com.mycompany.fabric_price_list.product;
+package com.mycompany.fabricpricelist.repository;
 
+import com.mycompany.fabricpricelist.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
