@@ -1,5 +1,6 @@
 package com.mycompany.fabricpricelist.controller;
 
+import com.mycompany.fabricpricelist.domain.MaterialType;
 import com.mycompany.fabricpricelist.dto.ProductDto;
 import com.mycompany.fabricpricelist.service.ProductService;
 import jakarta.validation.Valid;
@@ -49,13 +50,23 @@ public class ProductController {
      * 제품 등록
      */
     @PostMapping("/prices/register")
-    public String registerProduct(@Valid @ModelAttribute("form") ProductDto productDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registerProduct(@Valid @ModelAttribute("form") ProductDto productDto,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes ra) {
         if (bindingResult.hasErrors()) {
             return "price_register";
         }
+        productDto.setComposition(productDto.buildCompositionString());
         service.registerProduct(productDto);
-        redirectAttributes.addFlashAttribute("message", "제품이 등록되었습니다.");
+        ra.addFlashAttribute("message", "제품이 등록되었습니다.");
         return "redirect:/prices";
     }
 
+    /**
+     * 드롭다운 옵션 공급
+     */
+    @ModelAttribute("materials")
+    public MaterialType[] materials() {
+        return MaterialType.values();
+    }
 }
